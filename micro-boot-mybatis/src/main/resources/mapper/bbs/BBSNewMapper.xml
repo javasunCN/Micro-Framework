@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.microboot.cn.mapper.bbs.BBSNewMapper">
+    <resultMap id="BaseResultMap" type="com.microboot.cn.pojo.BBSNew">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="contact" jdbcType="VARCHAR" property="contact" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, contact, create_time, name
+    </sql>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        SELECT
+            <include refid="Base_Column_List" />
+        FROM bbsnew
+    </select>
+    <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT
+            <include refid="Base_Column_List" />
+        FROM bbsnew
+        WHERE id = #{id}
+    </select>
+    <delete id="deleteById" parameterType="java.lang.Long">
+        DELETE FROM bbsnew
+        WHERE id = #{id}
+    </delete>
+    <insert id="save" parameterType="com.microboot.cn.pojo.BBSNew">
+        INSERT INTO bbsnew
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="contact != null">
+                contact,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="contact != null">
+                #{contact,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="update" parameterType="com.microboot.cn.pojo.BBSNew">
+        UPDATE bbsnew
+        <set>
+            <if test="contact != null">
+                contact = #{contact,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+
+</mapper>
